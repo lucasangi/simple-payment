@@ -1,0 +1,41 @@
+server {
+    server_name   localhost;
+    listen        80;
+    root /var/www/app/public;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    server_tokens off;
+    client_max_body_size 5M;
+
+    location / {
+        # try to serve file directly, fallback to front controller
+        try_files $uri /index.php$is_args$args;
+    }
+
+    # If you have 2 front controllers for dev|prod use the following line instead
+    location ~ ^/index\.php(/|$) {
+
+        root /app/public;
+
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_pass ${API_HOST}:${API_PORT};
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        include fastcgi_params;
+        fastcgi_buffers 16 16k; 
+        fastcgi_buffer_size 32k;
+
+        # Prevents URIs that include the front controller. This will 404:
+        # http://domain.tld/index.php/some-path
+        # Enable the internal directive to disable URIs like this
+        # internal;
+    }
+
+    #return 404 for all php files as we do have a front controller
+    location ~ \.php$ {
+        return 404;
+    }
+
+    error_log /var/log/nginx/project_error.log;
+    access_log /var/log/nginx/project_access.log;
+}

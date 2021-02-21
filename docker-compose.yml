@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+  mysql:
+    container_name: simple_payment_database
+    image: mysql:8
+    ports:
+      - 3307:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app
+
+  php:
+    container_name: simple_payment_php
+    image: simple_payment_php
+    build:
+      context: ./app/
+      dockerfile: ./docker/php/Dockerfile
+    ports:
+      - 9000
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_SERVER=mysql
+      - DATABASE_URL=mysql
+      - DB_PORT=3306
+      - DB_NAME=app
+      - DB_USER=root
+      - DB_PASSWORD=root
+    depends_on:
+      - mysql
+
+  nginx:
+    container_name: simple_payment_nginx
+    image: simple_payment_nginx
+    build:
+      context: ./app/docker/nginx
+      dockerfile: ./Dockerfile
+    links:
+      - php
+    volumes:
+      - "./app/public:/var/www/app/public"
+    ports:
+      - 8080:80
+      - 444:443
+    environment:
+      - API_HOST=php
+      - API_PORT=9000

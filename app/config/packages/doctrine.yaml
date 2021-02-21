@@ -1,0 +1,20 @@
+doctrine:
+    dbal:
+        url: 'mysql://%env(DB_USER)%:%env(DB_PASSWORD)%@%env(DB_SERVER)%:%env(DB_PORT)%/%env(DB_NAME)%'
+        server_version: '8'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_0900_ai_ci
+
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/'
+                prefix: 'SimplePayment\'
+                alias: SimplePayment
