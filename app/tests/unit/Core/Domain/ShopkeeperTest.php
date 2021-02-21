@@ -67,6 +67,6 @@ class ShopkeeperTest extends TestCase
             1000
         );
 
-        $this->assertNotTrue(method_exists($shopkeeper, 'transferAmountToAccount'));
+        $this->assertNotTrue(method_exists($shopkeeper, 'transferAmountToUser'));
     }
 }

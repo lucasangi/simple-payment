@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SimplePayment\Core\Domain;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity()
  */
-
-class Shopkeeper extends User
+class CommonUser extends UserWithTransactionOption
 {
     public static function create(
         string $fullName,

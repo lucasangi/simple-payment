@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace SimplePayment\Tests\Core\Domain;
 
 use PHPUnit\Framework\TestCase;
+use SimplePayment\Core\Domain\CommonUser;
 use SimplePayment\Core\Domain\Event\PaymentReceived;
-use SimplePayment\Core\Domain\User;
 
 use function assert;
 
-class UserTest extends TestCase
+class CommonUserTest extends TestCase
 {
-    public function testShouldCreateAUser(): void
+    public function testShouldCreateACommonUser(): void
     {
-        $user = User::create(
+        $commomUser = CommonUser::create(
             'Evelyn Fernanda Gomes',
             '130.029.570-89',
             'evelynfernandagomes-86@gilconsultoria.com.br',
@@ -22,17 +22,17 @@ class UserTest extends TestCase
             100
         );
 
-        $this->assertEquals('Evelyn Fernanda Gomes', $user->fullName());
-        $this->assertEquals('130.029.570-89', $user->cpfOrCnpj());
-        $this->assertEquals('evelynfernandagomes-86@gilconsultoria.com.br', $user->email());
-        $this->assertEquals('JExOGEJq0P', $user->password());
-        $this->assertEquals(100, $user->walletAmount());
-        $this->assertEquals([], $user->domainEvents());
+        $this->assertEquals('Evelyn Fernanda Gomes', $commomUser->fullName());
+        $this->assertEquals('130.029.570-89', $commomUser->cpfOrCnpj());
+        $this->assertEquals('evelynfernandagomes-86@gilconsultoria.com.br', $commomUser->email());
+        $this->assertEquals('JExOGEJq0P', $commomUser->password());
+        $this->assertEquals(100, $commomUser->walletAmount());
+        $this->assertEquals([], $commomUser->domainEvents());
     }
 
-    public function testShouldDepositAmountForUser(): void
+    public function testShouldDepositAmountForCommonUser(): void
     {
-        $user = User::create(
+        $commomUser = CommonUser::create(
             'Evelyn Fernanda Gomes',
             '130.029.570-89',
             'evelynfernandagomes-86@gilconsultoria.com.br',
@@ -40,14 +40,14 @@ class UserTest extends TestCase
             0
         );
 
-        $user->receive(100);
+        $commomUser->receive(100);
 
-        $this->assertEquals(100, $user->walletAmount());
+        $this->assertEquals(100, $commomUser->walletAmount());
 
-        $storedDomainEvents = $user->domainEvents();
+        $storedDomainEvents = $commomUser->domainEvents();
 
         $this->assertCount(1, $storedDomainEvents);
-        $this->assertCount(0, $user->domainEvents());
+        $this->assertCount(0, $commomUser->domainEvents());
 
         [$paymentReceivedEvent] = $storedDomainEvents;
 
@@ -56,9 +56,9 @@ class UserTest extends TestCase
         $this->assertEquals(100, $paymentReceivedEvent->amount());
     }
 
-    public function testShouldTransferAmountFromUserToAnother(): void
+    public function testShouldTransferAmountFromCommonUserToAnother(): void
     {
-        $payer = User::create(
+        $payer = CommonUser::create(
             'Evelyn Fernanda Gomes',
             '130.029.570-89',
             'evelynfernandagomes-86@gilconsultoria.com.br',
@@ -66,7 +66,7 @@ class UserTest extends TestCase
             100
         );
 
-        $payee = User::create(
+        $payee = CommonUser::create(
             'Leandro Eduardo Luan Costa',
             '122.004.920-49',
             'leandroeduardoluancosta-98@tirel.com.br',
@@ -74,7 +74,7 @@ class UserTest extends TestCase
             33
         );
 
-        $payer->transferAmountToAccount(67, $payee);
+        $payer->transferAmountToUser(67, $payee);
 
         $this->assertEquals(33, $payer->walletAmount());
         $this->assertEquals(100, $payee->walletAmount());

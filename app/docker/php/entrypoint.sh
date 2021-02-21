@@ -20,7 +20,7 @@ done
 echo "- Done! MySQL is up - executing command"
 
 echo "- Running Migrations"
-# /app/bin/console doctrine:migrations:migrate --no-interaction
+/app/bin/console doctrine:migrations:migrate --no-interaction
 echo "- Done"
 
 exec "$@"

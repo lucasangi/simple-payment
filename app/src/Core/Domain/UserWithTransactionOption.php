@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SimplePayment\Core\Domain;
 
-abstract class AccountWithTransactionOption extends Account
+abstract class UserWithTransactionOption extends User
 {
-    public function transferAmountToAccount(float $amount, Account $user): void
+    public function transferAmountToUser(float $amount, User $user): void
     {
         $this->wallet->withdraw($amount);
         $user->receive($amount);

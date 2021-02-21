@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace SimplePayment\Core\Domain;
 
+use Doctrine\ORM\Mapping as ORM;
 use SimplePayment\Core\Domain\Exception\InsufficientBalance;
+/**
+ * @ORM\Embeddable()
+ */
 
 class Wallet
 {
+    /** @ORM\Column(type="decimal") */
     private float $amount;
 
     private function __construct(float $amount)
