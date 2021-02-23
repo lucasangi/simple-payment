@@ -41,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SimplePayment\\Tests\\Framework\\": "tests/unit/Framework"
+            "SimplePayment\\Tests\\": "tests/unit"
         }
     },
     "replace": {
@@ -73,7 +73,7 @@
             "phpcbf"
         ],
         "coverage": [
-            "phpunit --coverage-html var/coverage/"
+            "XDEBUG_MODE=coverage phpunit --coverage-text --colors=never --coverage-clover=var/coverage/coverage.clover --log-junit=var/coverage/log-junit.xml"
         ]
     },
     "conflict": {

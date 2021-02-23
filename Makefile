@@ -52,13 +52,18 @@ logs:
 
 ## Executa os testes da aplicação.
 test:
-	@echo ► Executando testes
+	@echo Executando testes
 	docker-compose exec php composer test
 
 ## Executa o linter.
 lint:
 	@echo Efetuando análise do código
 	docker-compose exec php composer lint
+
+## Executa o linter.
+coverage:
+	@echo Efetuando testes para exibir o relatório de coverage
+	docker-compose exec php composer coverage
 
 ## Tenta corrigir os problemas de lint automáticamente.
 lint.fix:
