@@ -3,19 +3,16 @@ framework:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 
-        default_bus: auth.bus.sync
+        default_bus: auth.bus
         buses:
-            auth.bus.sync:
+            auth.bus:
                 middleware:
                     - SimplePayment\Core\Infrastructure\Middleware\AuthenticationMiddleware
                     - validation
                     - doctrine_transaction
-            anonymous.bus.sync:
+            authless.bus:
                 middleware:
                     - validation
-                    - doctrine_transaction
-            queue.bus:
-                middleware:
                     - doctrine_transaction
 
         failure_transport: failed
@@ -36,3 +33,4 @@ framework:
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
+            SimplePayment\Core\Application\Async\SendPaymentNotification: async

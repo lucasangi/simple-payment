@@ -41,6 +41,19 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception } 
     
+    payment_received.domain_event_subscriber:
+        class: SimplePayment\Core\Domain\Event\PaymentReceivedSubscriber
+    
+    SimplePayment\Framework\DomainEvent\Domain\DomainEventPublisher:
+        arguments:
+            $subscribers: ['@payment_received.domain_event_subscriber']
+
+    Doctrine\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+    Doctrine\Common\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+
+    SimplePayment\Core\Domain\UserRepository:
+        class:  SimplePayment\Core\Infrastructure\Persistence\DoctrineUserRepository
+    
     # GuzzleClient
     GuzzleHttp\Client:
         class: 'GuzzleHttp\Client'
