@@ -27,7 +27,7 @@ class UserNotFound extends InvalidArgumentException implements ResourceNotFound,
         return 'User not found.';
     }
 
-    /** @return array<string, int> */
+    /** @return array<string, string> */
     public function getExtraDetails(): array
     {
         return [

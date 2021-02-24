@@ -6,7 +6,7 @@ namespace SimplePayment\Framework\DomainEvent\Domain;
 
 interface DomainEventSubscriber
 {
-    /** @return DomainEvent[] */
+    /** @return string[] */
     public function subscribedEvents(): array;
 
     public function handle(DomainEvent $domainEvent): void;

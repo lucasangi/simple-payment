@@ -9,8 +9,8 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 
-class AuthenticationMiddleware implements MiddlewareInterface {
-
+class AuthenticationMiddleware implements MiddlewareInterface
+{
     private Authenticator $authenticator;
 
     public function __construct(Authenticator $authenticator)
@@ -18,10 +18,10 @@ class AuthenticationMiddleware implements MiddlewareInterface {
         $this->authenticator = $authenticator;
     }
 
-    public function handle(Envelope $envelope, StackInterface $stack): Envelope {
+    public function handle(Envelope $envelope, StackInterface $stack): Envelope
+    {
         $this->authenticator->authenticate();
 
         return $envelope;
     }
-
-} 
+}
