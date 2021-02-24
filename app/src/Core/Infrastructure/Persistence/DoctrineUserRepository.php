@@ -9,6 +9,7 @@ use SimplePayment\Core\Domain\Exception\UserNotFound;
 use SimplePayment\Core\Domain\User;
 use SimplePayment\Core\Domain\UserRepository;
 use SimplePayment\Framework\DomainEvent\Domain\DomainEventPublisher;
+use SimplePayment\Framework\Id\Domain\Id;
 
 class DoctrineUserRepository implements UserRepository
 {
@@ -32,10 +33,9 @@ class DoctrineUserRepository implements UserRepository
         }
     }
 
-    public function findOneById(int $id): User
+    public function findOneById(Id $id): User
     {
-        $user = $this->objectManager->getRepository(self::ENTITY)
-            ->find($id);
+        $user = $this->objectManager->getRepository(self::ENTITY)->find($id);
 
         if ($user instanceof User) {
             return $user;

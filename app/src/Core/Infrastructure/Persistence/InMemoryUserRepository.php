@@ -7,9 +7,9 @@ namespace SimplePayment\Core\Infrastructure\Persistence;
 use SimplePayment\Core\Domain\Exception\UserNotFound;
 use SimplePayment\Core\Domain\User;
 use SimplePayment\Core\Domain\UserRepository;
+use SimplePayment\Framework\Id\Domain\Id;
 
 use function array_filter;
-use function array_key_exists;
 use function array_values;
 use function count;
 use function in_array;
@@ -35,15 +35,19 @@ class InMemoryUserRepository implements UserRepository
         $this->items[] = $user;
     }
 
-    public function findOneById(int $id): User
+    public function findOneById(Id $id): User
     {
-        $key = $id - 1;
+        $filteredUsers = array_values(
+            array_filter($this->items, static function (User $user) use ($id) {
+                return $user->id()->isEqualTo($id);
+            })
+        );
 
-        if (! array_key_exists($key, $this->items)) {
+        if (count($filteredUsers) === 0) {
             throw UserNotFound::withGivenId($id);
         }
 
-        return $this->items[$key];
+        return reset($filteredUsers);
     }
 
     public function findOneOrNullByEmail(string $email): ?User

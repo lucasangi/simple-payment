@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimplePayment\Core\Domain;
 
 use Doctrine\ORM\Mapping as ORM;
+use SimplePayment\Framework\Id\Domain\Id;
 
 /**
  * @ORM\Entity()
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CommonUser extends UserWithTransactionOption
 {
     public static function create(
+        Id $id,
         string $fullName,
         string $cpf,
         string $email,
@@ -19,6 +21,7 @@ class CommonUser extends UserWithTransactionOption
         float $amount
     ): self {
         return new self(
+            $id,
             $fullName,
             $cpf,
             $email,

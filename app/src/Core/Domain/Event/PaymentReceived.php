@@ -9,13 +9,20 @@ use SimplePayment\Framework\DomainEvent\Domain\DomainEvent;
 
 class PaymentReceived implements DomainEvent
 {
+    private string $userId;
     private float $amount;
     private DateTimeImmutable $occurredOn;
 
-    private function __construct(float $amount)
+    private function __construct(string $userId, float $amount)
     {
         $this->amount = $amount;
+        $this->userId = $userId;
         $this->occurredOn = new DateTimeImmutable();
+    }
+
+    public function userId(): string
+    {
+        return $this->userId;
     }
 
     public function amount(): float
@@ -28,8 +35,8 @@ class PaymentReceived implements DomainEvent
         return $this->occurredOn;
     }
 
-    public static function create(float $amount): self
+    public static function create(string $userId, float $amount): self
     {
-        return new self($amount);
+        return new self($userId, $amount);
     }
 }

@@ -12,7 +12,7 @@ use SimplePayment\Core\Domain\Exception\InsufficientBalance;
 
 class Wallet
 {
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=8, scale=2) */
     private float $amount;
 
     private function __construct(float $amount)

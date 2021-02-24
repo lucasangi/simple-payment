@@ -7,6 +7,7 @@ namespace SimplePayment\Core\Domain;
 use Doctrine\ORM\Mapping as ORM;
 use SimplePayment\Core\Domain\Event\PaymentReceived;
 use SimplePayment\Framework\DomainEvent\Domain\DomainEvent;
+use SimplePayment\Framework\Id\Domain\Id;
 
 /**
  * @ORM\Entity()
@@ -28,10 +29,9 @@ abstract class User
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid")
      */
-    private int $id;
+    protected Id $id;
 
     /** @ORM\Column(type="string") */
     protected string $fullName;
@@ -52,12 +52,14 @@ abstract class User
     protected array $domainEvents;
 
     protected function __construct(
+        Id $id,
         string $fullName,
         string $cpfOrCnpj,
         string $email,
         string $password,
         float $amount
     ) {
+        $this->id = $id;
         $this->fullName = $fullName;
         $this->cpfOrCnpj = $cpfOrCnpj;
         $this->email = $email;
@@ -65,7 +67,7 @@ abstract class User
         $this->wallet = Wallet::create($amount);
     }
 
-    public function id(): int
+    public function id(): Id
     {
         return $this->id;
     }
@@ -114,6 +116,6 @@ abstract class User
     {
         $this->wallet->deposit($amount);
 
-        $this->domainEvents[] = PaymentReceived::create($amount);
+        $this->domainEvents[] = PaymentReceived::create($this->id->toString(), $amount);
     }
 }

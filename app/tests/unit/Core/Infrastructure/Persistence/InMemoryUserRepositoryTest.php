@@ -10,6 +10,7 @@ use SimplePayment\Core\Domain\Exception\UserNotFound;
 use SimplePayment\Core\Domain\Shopkeeper;
 use SimplePayment\Core\Domain\User;
 use SimplePayment\Core\Infrastructure\Persistence\InMemoryUserRepository;
+use SimplePayment\Framework\Id\Domain\Id;
 
 use function assert;
 
@@ -22,7 +23,7 @@ class InMemoryUserRepositoryTest extends TestCase
 
         $repository->save($user);
 
-        $foundedUser = $repository->findOneById(1);
+        $foundedUser = $repository->findOneById($user->id());
 
         $this->assertEquals($user->fullName(), $foundedUser->fullName());
         $this->assertEquals($user->email(), $foundedUser->email());
@@ -38,13 +39,13 @@ class InMemoryUserRepositoryTest extends TestCase
 
         $repository->save($user);
 
-        $editedUser = $repository->findOneById(1);
+        $editedUser = $repository->findOneById($user->id());
 
         $editedUser->receive(200);
 
         $repository->save($editedUser);
 
-        $foundedUser = $repository->findOneById(1);
+        $foundedUser = $repository->findOneById($user->id());
         $this->assertEquals(200, $foundedUser->walletAmount());
     }
 
@@ -54,12 +55,13 @@ class InMemoryUserRepositoryTest extends TestCase
 
         $repository = new InMemoryUserRepository([]);
 
-        $repository->findOneById(1);
+        $repository->findOneById(Id::generate());
     }
 
     public function testShouldFindUserByEmail(): void
     {
         $user = CommonUser::create(
+            Id::generate(),
             'Leandro Eduardo Luan Costa',
             '122.004.920-49',
             'leandroeduardoluancosta-98@tirel.com.br',
@@ -87,6 +89,7 @@ class InMemoryUserRepositoryTest extends TestCase
     public function testShouldFindUserByCpfOrCnpj(): void
     {
         $user = CommonUser::create(
+            Id::generate(),
             'Leandro Eduardo Luan Costa',
             '122.004.920-49',
             'leandroeduardoluancosta-98@tirel.com.br',
@@ -117,6 +120,7 @@ class InMemoryUserRepositoryTest extends TestCase
         return [
             'Common User' => [
                 CommonUser::create(
+                    Id::generate(),
                     'Leandro Eduardo Luan Costa',
                     '122.004.920-49',
                     'leandroeduardoluancosta-98@tirel.com.br',
@@ -126,6 +130,7 @@ class InMemoryUserRepositoryTest extends TestCase
             ],
             'Shopkeeper' => [
                 Shopkeeper::create(
+                    Id::generate(),
                     'Carlos Eduardo e Lavínia Buffet ME',
                     '75.778.772/0001-58',
                     'almoxarifado@carloseduardoelaviniabuffetme.com.br',

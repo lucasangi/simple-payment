@@ -10,6 +10,7 @@ use SimplePayment\Core\Domain\Shopkeeper;
 use SimplePayment\Core\Domain\User;
 use SimplePayment\Core\Infrastructure\Persistence\DoctrineUserRepository;
 use SimplePayment\Framework\DomainEvent\Domain\DomainEventPublisher;
+use SimplePayment\Framework\Id\Domain\Id;
 use SimplePayment\Tests\Framework\DoctrineTestCase;
 
 use function assert;
@@ -82,12 +83,13 @@ class DoctrineUserRepositoryTest extends DoctrineTestCase
 
         $repository = new DoctrineUserRepository($this->entityManager, $mockPublisher);
 
-        $repository->findOneById(1);
+        $repository->findOneById(Id::generate());
     }
 
     public function testShouldFindUserByEmail(): void
     {
         $user = CommonUser::create(
+            Id::generate(),
             'Leandro Eduardo Luan Costa',
             '122.004.920-49',
             'leandroeduardoluancosta-98@tirel.com.br',
@@ -131,6 +133,7 @@ class DoctrineUserRepositoryTest extends DoctrineTestCase
     public function testShouldFindUserByCpfOrCnpj(): void
     {
         $user = CommonUser::create(
+            Id::generate(),
             'Leandro Eduardo Luan Costa',
             '122.004.920-49',
             'leandroeduardoluancosta-98@tirel.com.br',
@@ -177,6 +180,7 @@ class DoctrineUserRepositoryTest extends DoctrineTestCase
         return [
             'Common User' => [
                 CommonUser::create(
+                    Id::generate(),
                     'Leandro Eduardo Luan Costa',
                     '122.004.920-49',
                     'leandroeduardoluancosta-98@tirel.com.br',
@@ -186,6 +190,7 @@ class DoctrineUserRepositoryTest extends DoctrineTestCase
             ],
             'Shopkeeper' => [
                 Shopkeeper::create(
+                    Id::generate(),
                     'Carlos Eduardo e Lavínia Buffet ME',
                     '75.778.772/0001-58',
                     'almoxarifado@carloseduardoelaviniabuffetme.com.br',
