@@ -3,11 +3,32 @@ framework:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 
+        default_bus: auth.bus.sync
+        buses:
+            auth.bus.sync:
+                middleware:
+                    - SimplePayment\Core\Infrastructure\Middleware\AuthenticationMiddleware
+                    - validation
+                    - doctrine_transaction
+            anonymous.bus.sync:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+
+        failure_transport: failed
+
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            sync: 'sync://'
+            async: 
+                dsn: "doctrine://default?queue_name=async"
+                options:
+                    auto_setup: false
+
+            failed: 
+                dsn: "doctrine://default?queue_name=failed"
+                options:
+                    auto_setup: false
 
         routing:
             # Route your messages to the transports

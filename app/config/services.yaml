@@ -40,3 +40,7 @@ services:
             $errorHandlers: '%errorHandlerChain%'
         tags:
             - { name: kernel.event_listener, event: kernel.exception } 
+    
+    # GuzzleClient
+    GuzzleHttp\Client:
+        class: 'GuzzleHttp\Client'
