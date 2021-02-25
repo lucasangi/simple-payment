@@ -9,7 +9,7 @@ Sistema de transferência (pagamentos) entre usuários (comuns e lojistas) imple
 
 ## Executando a aplicação
 
-Clone o repositório em uma pasta de sua preferência e via terminar execute o seguinte comando para que os containers (PHP, MySQL e Nginx) da aplicação sejam criados e inicializados:
+Clone o repositório em uma pasta de sua preferência e via terminal execute o seguinte comando para que os containers (PHP, MySQL e Nginx) da aplicação sejam criados e inicializados:
 
 ```sh
 make up
@@ -17,7 +17,7 @@ make up
 
 > **Importante:** É necessário possuir o [Docker](https://docs.docker.com/get-docker/) instalado para executar a aplicação.
 
-O processo de inicialização do container PHP instala as dependências do projeto e roda as migrations, logo, é necessário aguardar o término desses processos para utilizar a aplicação. 
+O processo de inicialização do container PHP instala as dependências do projeto e executa as migrations, logo, é necessário aguardar o término desse processo para utilizar a aplicação. 
 
 Para isso, é possível monitorar os logs dos containers através do comando: 
 
@@ -41,7 +41,7 @@ simple_payment_php | 2021-02-25T02:18:37.137497410Z [25-Feb-2021 02:18:37] NOTIC
 
 ## Rotas
 
-A partir da inicialização da aplicação é consumí-la através de um cliente HTTP como o [Postman](https://www.postman.com/) ou [Insomia](https://insomnia.rest/). 
+A partir da inicialização da aplicação é possível consumí-la através de um cliente HTTP como o [Postman](https://www.postman.com/) ou [Insomia](https://insomnia.rest/). 
 > **Importante:** A aplicação estará disponível em ***localhost:8080.***
 
 ### Criando usuários
@@ -115,7 +115,7 @@ Através dessa rota é possível consultar os dados de um usuário.
 }
 ```
 
-> **Importante:** Assim como na rota de criação de usuário o atributo `type` representa o tipo de usuário criado. 
+> **Importante:** Assim como na rota de criação de usuário o atributo `type` representa o tipo de usuário. 
 
 ### Realizando Transações
 
@@ -147,7 +147,7 @@ Como resposta a rota retorna o código HTTP 204.
 
 ## Executando Processos Assíncronos
 
-Quando realizamos uma transação é necessário enviar uma notificação, tal processo é realizado em segundo plano por intermédio do [Symfony Messenger](https://symfony.com/doc/current/messenger.html).  
+Quando realizamos uma transação é necessário enviar uma notificação de pagamento, tal processo é realizado em segundo plano por intermédio do [Symfony Messenger](https://symfony.com/doc/current/messenger.html).  
 
 Através desse componente é possível garantir a retentativa de um comando (processo) em caso de erros, além de armazenar ocorrências de comandos que falharam em suas retêntivas. 
 
@@ -236,7 +236,7 @@ Para gerar e exibir o relatório de coverage (cobertura) alcançado pelos testes
 make coverage
 ```
 
-O comando exibirá uma saída com o sumário de porcentagem de cobertura baseado em diversos aspectos além de uma análise de cobertura por classes, conforme pode-se observar abaixo:
+O comando exibirá uma saída com o sumário da porcentagem de cobertura de código, além de uma análise de cobertura por classes, conforme pode-se observar abaixo:
 
 ```
 Code Coverage Report:      
@@ -261,24 +261,24 @@ O próximo passo é o armazenamento dos eventos de domínio com o intuito de alc
 
 ### Monitoramento no Error Handler
 
-A aplicação possui um Exception Listener que recebe as exceções lançadas, dentro do listener existe uma [Chain Of Responsability](https://refactoring.guru/pt-br/design-patterns/chain-of-responsibility) de Error Handler responsável por formatar a exceção recebida em uma resposta em JSON.
+A aplicação possui um Exception Listener que recebe as exceções lançadas, dentro do listener existe uma [Chain Of Responsability](https://refactoring.guru/pt-br/design-patterns/chain-of-responsibility) de Error Handler, em que cada Error Handler é responsável por formatar um tipo específico de exceção em uma resposta JSON.
 
-A fim de melhorar o gerenciamento da aplicação, seria possível adicionar uma ferramenta de monitoramento como (NewRelic ou Sentry) aos nós da corrente Error Handler, afim de que as exceções do sistema sejam monitoradas.
+Afim de melhorar o gerenciamento da aplicação, seria possível adicionar uma ferramenta de monitoramento como (NewRelic ou Sentry) aos nós da corrente (Error Handler), com intuito de que as exceções do sistema sejam monitoradas.
 
 ## Esclarecimentos
 
 ### Por que utilizar o Symfony?
 
-De maneira sucinta o Symfony apresenta algumas vantagens em relação à estrutura do projeto e a sua manutenção à longo prazo, o que o torna mais adequado para projetos maiores e complexos. 
+De maneira sucinta o Symfony apresenta algums benefícios em relação à estrutura do projeto e a sua manutenção à longo prazo, o que o torna mais adequado para projetos maiores e complexos. 
 
-Uma vez que é dividido em módulos integráveis é possível solicitar somente as funcionalidades que o sistema realmente utilizará, o tornando mais conciso. Além disso, possui mecanismos mais claros e transparentes que facilitam a aplicação de padrões e boas práticas como: Injeção de Depência, est-Drive Development (TDD), entre outros.
+Uma vez que é dividido em módulos integráveis é possível importar somente as funcionalidades que o sistema realmente utilizará, o tornando mais conciso. Além disso, possui mecanismos mais claros e transparentes que facilitam a aplicação de padrões e boas práticas como: Injeção de Depência, Test-Drive Development (TDD), entre outros.
 
 ### Por que utilizar que UUID?
 
 Dentre os benefícios recebidos devido ao do uso do [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal), podemos citar a integridade das entidades do sistema. 
 
-Quando utilizarmos uma estratégia de geração automatica de ID's as entidades do sistema (Domain Object) permanecem inválidas até que sejam persistidas no banco de dados, uma vez que ainda não possuem ID.
+Quando utilizarmos uma estratégia de geração automatica de ID as entidades do sistema (Domain Object) permanecem inválidas até que sejam persistidas no banco de dados, uma vez que ainda não possuem ID. Nesse cenário, torna-se mais complexo testar as entidades, uma vez que em alguns cenários o ID da entidade será necessário.
 
-Nesse cenário, torna-se mais complexo testar as entidades, uma vez que em alguns cenários o ID da entidade será necessário. Para resolver essa questão seria necessário depender do I/O do banco de dados, logo, o teste se tornará mais lento.
+Logo, para resolver essa questão seria necessário persistir as entidades no banco de dados, porém, isso torna o teste mais lento uma vez que dependeremos do I/O do banco de dados.
 
-Com o UUID esses problemas não acontecem, uma vez que o UUID sempre será único, logo é possível adicioná-lo ao construtor da entidade para que seus objetos sempre tenham um estado válido.
+Com o UUID tais problemas não acontecem, pois, uma vez que o UUID sempre será único é possível adicioná-lo ao construtor da entidade para que seus objetos sempre tenham um estado válido.
