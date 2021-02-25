@@ -10,9 +10,13 @@ use SimplePayment\Framework\Id\Domain\Id;
 /**
  * @ORM\Entity()
  */
-
 class Shopkeeper extends User
 {
+    public static function type(): string
+    {
+        return 'shopkeeper';
+    }
+
     public static function create(
         Id $id,
         string $fullName,

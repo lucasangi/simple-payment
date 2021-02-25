@@ -31,6 +31,7 @@ class CommonUserTest extends TestCase
         $this->assertEquals('JExOGEJq0P', $commomUser->password());
         $this->assertEquals(100, $commomUser->walletAmount());
         $this->assertEquals([], $commomUser->domainEvents());
+        $this->assertEquals('common', $commomUser->type());
     }
 
     public function testShouldDepositAmountForCommonUser(): void

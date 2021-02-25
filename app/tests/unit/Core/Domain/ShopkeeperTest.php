@@ -31,6 +31,7 @@ class ShopkeeperTest extends TestCase
         $this->assertEquals('53HBej7K', $shopkeeper->password());
         $this->assertEquals(1000, $shopkeeper->walletAmount());
         $this->assertEquals([], $shopkeeper->domainEvents());
+        $this->assertEquals('shopkeeper', $shopkeeper->type());
     }
 
     public function testShouldDepositAmountForShopkeeper(): void

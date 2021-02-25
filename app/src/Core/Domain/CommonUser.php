@@ -12,6 +12,11 @@ use SimplePayment\Framework\Id\Domain\Id;
  */
 class CommonUser extends UserWithTransactionOption
 {
+    public static function type(): string
+    {
+        return 'common';
+    }
+
     public static function create(
         Id $id,
         string $fullName,

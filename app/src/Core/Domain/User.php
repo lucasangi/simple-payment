@@ -118,4 +118,11 @@ abstract class User
 
         $this->domainEvents[] = PaymentReceived::create($this->id->toString(), $amount);
     }
+
+     /**
+      * @return string
+      *
+      * Returns the class discrimination value used in Single Table Inheritance (STI).
+      */
+    abstract public static function type(): string;
 }
