@@ -1,7 +1,8 @@
-# controllers:
-#     resource: ../../src/Controller/
-#     type: annotation
+transaction_controllers:
+   resource: ../../src/Core/Infrastructure/Delivery
+   type: annotation
 
-# kernel:
-#     resource: ../../src/Kernel.php
-#     type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

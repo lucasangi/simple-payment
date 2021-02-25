@@ -32,11 +32,6 @@ up:
 	make build
 	docker-compose up -d
 
-## Roda as Migrations.
-migrate:
-	@echo 💾 Criando e populando banco de dados local.
-	docker-compose run php console doctrine:migrations:migrate --no-interaction
-
 ## Desliga a aplicação.
 down:
 	@echo 🔴 Desligando os serviços.
@@ -85,3 +80,7 @@ clean:
 freespace:
 	@echo 🗑️ Apagando arquivos do Docker que não estão sendo utilizados
 	docker system prune --all --volumes --force
+
+messenger:
+	@echo ⏲ Executando processos assíncronos
+	docker-compose exec php console messenger:consume async -vv

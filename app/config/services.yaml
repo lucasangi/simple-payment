@@ -6,6 +6,7 @@
 parameters:
     errorHandlerChain:
         - SimplePayment\Framework\Exception\Infrastructure\Handler\NotFoundHttpErrorHandler
+        - SimplePayment\Framework\Exception\Infrastructure\Handler\SymfonyMessengerErroUnpacker
         - SimplePayment\Framework\Exception\Infrastructure\Handler\ValidationFailedErrorHandler
         - SimplePayment\Framework\Exception\Infrastructure\Handler\LcobucciErrorHandler
         - SimplePayment\Framework\Exception\Infrastructure\Handler\DebugErrorHandler
@@ -27,9 +28,9 @@ services:
     
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    # SimplePayment\Controller\:
-    #     resource: '../src/Controller/'
-    #     tags: ['controller.service_arguments']
+    SimplePayment\Core\Infrastructure\Delivery\:
+        resource: '../src/Core/Infrastructure/Delivery'
+        tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

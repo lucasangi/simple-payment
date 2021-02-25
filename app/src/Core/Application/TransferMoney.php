@@ -9,7 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /** @psalm-immutable */
 class TransferMoney
 {
-    /** @Assert\Type("float") */
+    /**
+     * @Assert\Type("float")
+     * @Assert\GreaterThanOrEqual(1)
+     */
     public float $value;
 
     /**

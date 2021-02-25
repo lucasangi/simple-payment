@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace SimplePayment\Core\Application;
 
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /** @psalm-immutable */
 class CreateUser
 {
     /**
+     * @SerializedName("full_name")
      * @Assert\Type("string")
      * @Assert\NotBlank
      */
     public string $fullName;
 
     /**
+     * @SerializedName("cpf_cnpj")
      * @Assert\Type("string")
      * @Assert\NotBlank
      */
