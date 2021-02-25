@@ -6,10 +6,10 @@ namespace SimplePayment\Core\Domain;
 
 use Doctrine\ORM\Mapping as ORM;
 use SimplePayment\Core\Domain\Exception\InsufficientBalance;
+
 /**
  * @ORM\Embeddable()
  */
-
 class Wallet
 {
     /** @ORM\Column(type="decimal", precision=8, scale=2) */

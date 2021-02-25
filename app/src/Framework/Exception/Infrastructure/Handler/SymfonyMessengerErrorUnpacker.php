@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Throwable;
 
-class SymfonyMessengerErroUnpacker extends ErrorHandler
+class SymfonyMessengerErrorUnpacker extends ErrorHandler
 {
     public function canHandle(Throwable $exception): bool
     {

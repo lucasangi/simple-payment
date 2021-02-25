@@ -109,7 +109,7 @@ Através dessa rota é possível consultar os dados de um usuário.
     "id": "f48d4f54-3960-4847-b2d0-e8ee1be77fcc",
     "full_name": "Elias Benjamin Costa",
     "email": "eeliasbenjamincosta@sinalmanaus.com.br",
-    "cnpj_cpf": "510.987.971-08",
+    "cpf_cnpj": "510.987.971-08",
     "wallet_amount": 1000,
     "type": "common"
 }
@@ -134,7 +134,7 @@ Através dessa rota é possível realizar transações financeiras entre os usu�
     "payee" : "3cf61cbc-0400-4ee0-b621-ef0bc07eddba"
 }
 ```
-
+> O atributo `payer` possui o ID do usuário que será o pagador, ao passo que o `payee` possui o id do usuário beneficiado.
 ------
 
 #### Resposta
@@ -271,7 +271,7 @@ Afim de melhorar o gerenciamento da aplicação, seria possível adicionar uma f
 
 De maneira sucinta o Symfony apresenta algums benefícios em relação à estrutura do projeto e a sua manutenção à longo prazo, o que o torna mais adequado para projetos maiores e complexos. 
 
-Uma vez que é dividido em módulos integráveis é possível importar somente as funcionalidades que o sistema realmente utilizará, o tornando mais conciso. Além disso, possui mecanismos mais claros e transparentes que facilitam a aplicação de padrões e boas práticas como: Injeção de Depência, Test-Drive Development (TDD), entre outros.
+Uma vez que é dividido em módulos integráveis é possível importar somente as funcionalidades que o sistema realmente utilizará, o tornando mais conciso. Além disso, possui mecanismos mais claros e transparentes que facilitam a aplicação de padrões e boas práticas como: Injeção de Dependência, Test-Drive Development (TDD), entre outros.
 
 ### Por que utilizar que UUID?
 

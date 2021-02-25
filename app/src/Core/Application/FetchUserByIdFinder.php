@@ -33,7 +33,7 @@ class FetchUserByIdFinder implements MessageHandlerInterface
             'id' => $user->id()->toString(),
             'full_name' => $user->fullName(),
             'email' => $user->email(),
-            'cnpj_cpf' => $user->cpfOrCnpj(),
+            'cpf_cnpj' => $user->cpfOrCnpj(),
             'wallet_amount' => $user->walletAmount(),
             'type' => $user->type(),
         ];

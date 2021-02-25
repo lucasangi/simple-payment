@@ -47,7 +47,7 @@ class CreateUserHandler implements MessageHandlerInterface
         $amount = $command->amount;
 
         $this->throwExceptionIfEmailAlreadyExists($email);
-        $this->throwExceptionIfCPForCPNJAlreadyExists($cpf);
+        $this->throwExceptionIfCPForCNPJAlreadyExists($cpf);
 
         $commonUser = CommonUser::create(
             $id,
@@ -69,11 +69,11 @@ class CreateUserHandler implements MessageHandlerInterface
         $fullName = $command->fullName;
         $cnpj = $command->cpfOrCnpj;
         $email = $command->email;
-        $password = $command->password;
+        $password = $this->passwordEncoder->encodePassword($command->password);
         $amount = $command->amount;
 
         $this->throwExceptionIfEmailAlreadyExists($email);
-        $this->throwExceptionIfCPForCPNJAlreadyExists($cnpj);
+        $this->throwExceptionIfCPForCNPJAlreadyExists($cnpj);
 
         $shopkeeper = Shopkeeper::create(
             $id,
@@ -98,7 +98,7 @@ class CreateUserHandler implements MessageHandlerInterface
         }
     }
 
-    private function throwExceptionIfCPForCPNJAlreadyExists(string $cprOrCnpj): void
+    private function throwExceptionIfCPForCNPJAlreadyExists(string $cprOrCnpj): void
     {
         $foundedUser = $this->repository->findOneOrNullByCpfOrCnpj($cprOrCnpj);
 

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ErrorHandlerTest extends TestCase
 {
-    public function testShouldHandleUnsupportedExceptionWithNextHandler(): void
+    public function testShouldHandleExceptionWithNextHandler(): void
     {
         $exception = new Exception('An Exception');
 
@@ -23,7 +23,7 @@ class ErrorHandlerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testShouldThrowExceptionOnTryHandleUnsupportedExceptionWithoutNextHandler(): void
+    public function testShouldThrowExceptionOnTryHandleExceptionWithoutNextHandler(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('This error cannot be handled.');

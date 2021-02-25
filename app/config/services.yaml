@@ -6,7 +6,7 @@
 parameters:
     errorHandlerChain:
         - SimplePayment\Framework\Exception\Infrastructure\Handler\NotFoundHttpErrorHandler
-        - SimplePayment\Framework\Exception\Infrastructure\Handler\SymfonyMessengerErroUnpacker
+        - SimplePayment\Framework\Exception\Infrastructure\Handler\SymfonyMessengerErrorUnpacker
         - SimplePayment\Framework\Exception\Infrastructure\Handler\ValidationFailedErrorHandler
         - SimplePayment\Framework\Exception\Infrastructure\Handler\LcobucciErrorHandler
         - SimplePayment\Framework\Exception\Infrastructure\Handler\DebugErrorHandler

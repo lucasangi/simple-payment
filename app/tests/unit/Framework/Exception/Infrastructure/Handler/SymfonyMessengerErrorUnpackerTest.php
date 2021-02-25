@@ -8,16 +8,16 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use SimplePayment\Core\Domain\Exception\InsufficientBalance;
 use SimplePayment\Framework\Exception\Infrastructure\Handler\GenericErrorHandler;
-use SimplePayment\Framework\Exception\Infrastructure\Handler\SymfonyMessengerErroUnpacker;
+use SimplePayment\Framework\Exception\Infrastructure\Handler\SymfonyMessengerErrorUnpacker;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
-class SymfonyMessengerErroUnpackerTest extends TestCase
+class SymfonyMessengerErrorUnpackerTest extends TestCase
 {
     public function testShouldIndicateCanHandleException(): void
     {
-        $handler = new SymfonyMessengerErroUnpacker(new GenericErrorHandler());
+        $handler = new SymfonyMessengerErrorUnpacker(new GenericErrorHandler());
 
         $envelope = $this->aEnvelope();
         $exception = new HandlerFailedException(
@@ -34,7 +34,7 @@ class SymfonyMessengerErroUnpackerTest extends TestCase
     {
         $exception = new Exception();
 
-        $handler = new SymfonyMessengerErroUnpacker(new GenericErrorHandler());
+        $handler = new SymfonyMessengerErrorUnpacker(new GenericErrorHandler());
         $canDeal = $handler->canHandle($exception);
 
         $this->assertEquals(false, $canDeal);
@@ -44,7 +44,7 @@ class SymfonyMessengerErroUnpackerTest extends TestCase
     {
         $nextHandler = new GenericErrorHandler();
 
-        $handler = new SymfonyMessengerErroUnpacker($nextHandler);
+        $handler = new SymfonyMessengerErrorUnpacker($nextHandler);
 
         $nestedException = InsufficientBalance::forWithdraw();
         $envelope = $this->aEnvelope();
