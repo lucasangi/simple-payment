@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplePayment\Tests\Core\Infrastructure\Authentication;
+namespace SimplePayment\Tests\Core\Infrastructure\Notifier;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;

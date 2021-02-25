@@ -22,6 +22,6 @@ class AuthenticationMiddleware implements MiddlewareInterface
     {
         $this->authenticator->authenticate();
 
-        return $envelope;
+        return $stack->next()->handle($envelope, $stack);
     }
 }
